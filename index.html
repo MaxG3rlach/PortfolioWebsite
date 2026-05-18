@@ -6,396 +6,798 @@
 <title>Max Gerlach — Aviation Photography</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
+
+/* ══════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════ */
 :root {
-  --leather:    #2b1f14;
-  --cockpit:    #1a130a;
-  --riveted:    #3d2e1e;
-  --worn:       #6b5740;
-  --brass:      #c49a3c;
-  --brass-dim:  #8a6a20;
-  --canvas:     #d4c5a0;
-  --linen:      #ede5d0;
-  --smoke:      #a89880;
+  --bg:        #111009;
+  --surface:   #1c1810;
+  --border:    rgba(200,170,100,0.12);
+  --border-hi: rgba(200,170,100,0.28);
+  --gold:      #c8aa64;
+  --gold-dim:  #7a6535;
+  --text:      #e8dfc8;
+  --muted:     #8a7d65;
+  --faint:     #3d3520;
+  --white:     #f5f0e8;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { background: var(--cockpit); color: var(--linen); font-family: 'Barlow', sans-serif; overflow-x: hidden; }
+html { scroll-behavior: smooth; font-size: 16px; }
 
-/* RIVET ROWS */
-.rivet-row { display: flex; gap: 16px; padding: 18px 32px; align-items: center; }
-.rivet-row::before, .rivet-row::after {
-  content: ''; flex: 1; height: 1px;
-  background: linear-gradient(to right, transparent, rgba(196,154,60,0.3), transparent);
-}
-.rivet {
-  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
-  background: radial-gradient(circle at 35% 30%, #e8c060, var(--brass-dim));
-  box-shadow: 0 0 0 1.5px rgba(196,154,60,0.2), inset 0 1px 1px rgba(255,255,255,0.1);
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* NAV */
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 54px; padding: 0 40px;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 56px;
   display: flex; align-items: center; justify-content: space-between;
-  background: rgba(26,19,10,0.96);
-  border-bottom: 1px solid rgba(196,154,60,0.15);
+  padding: 0 48px;
+  background: rgba(17,16,9,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
 }
-.nav-logo { font-family: 'Special Elite', serif; font-size: 19px; color: var(--brass); text-decoration: none; letter-spacing: 0.04em; }
-.nav-logo sup { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: 0.22em; color: var(--smoke); text-transform: uppercase; margin-left: 6px; }
-.nav-links { display: flex; gap: 28px; list-style: none; }
-.nav-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--smoke); text-decoration: none; transition: color 0.25s; }
-.nav-links a:hover { color: var(--brass); }
 
-/* HERO */
-.hero { position: relative; height: 100vh; min-height: 600px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
-.hero-bg {
-  position: absolute; inset: 0;
-  background-image: url('https://airplanephotography.nl/images/A2A1.jpg');
-  background-size: cover; background-position: center 35%;
-  animation: heroZoom 20s ease-out forwards;
+.nav-logo {
+  display: flex; align-items: baseline; gap: 10px;
+  text-decoration: none;
 }
-@keyframes heroZoom { from { transform: scale(1.07); } to { transform: scale(1.0); } }
-.hero-bg::after {
+.nav-logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+.nav-logo-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.nav-links {
+  display: flex; gap: 36px; list-style: none;
+}
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero {
+  position: relative;
+  height: 100vh; min-height: 620px;
+  display: flex; align-items: flex-end;
+  overflow: hidden;
+}
+
+.hero-img {
+  position: absolute; inset: 0;
+  background: url('https://airplanephotography.nl/images/A2A1.jpg') center 38% / cover no-repeat;
+  animation: heroIn 16s ease-out forwards;
+}
+@keyframes heroIn { from { transform: scale(1.06); } to { transform: scale(1); } }
+
+.hero-img::after {
   content: ''; position: absolute; inset: 0;
   background:
-    linear-gradient(to top, rgba(26,19,10,1) 0%, rgba(26,19,10,0.52) 40%, rgba(26,19,10,0.05) 65%),
-    linear-gradient(to right, rgba(26,19,10,0.55) 0%, transparent 60%);
-}
-.hero-vignette {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 88% 78% at 50% 50%, transparent 52%, rgba(26,19,10,0.6) 100%);
-  pointer-events: none;
-}
-.hero-body { position: relative; z-index: 2; padding: 0 48px 64px; max-width: 820px; }
-.hero-tag {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700;
-  letter-spacing: 0.38em; text-transform: uppercase; color: var(--brass);
-  display: flex; align-items: center; gap: 14px; margin-bottom: 18px;
-  opacity: 0; animation: rise 0.8s 0.35s ease-out forwards;
-}
-.hero-tag::before { content: ''; width: 26px; height: 1px; background: var(--brass); flex-shrink: 0; }
-h1.hero-name {
-  font-family: 'Special Elite', serif;
-  font-size: clamp(58px, 11vw, 130px); line-height: 0.9; letter-spacing: 0.01em;
-  opacity: 0; animation: rise 0.9s 0.55s ease-out forwards;
-}
-h1.hero-name .ghost { color: transparent; -webkit-text-stroke: 1.5px rgba(212,197,160,0.3); display: block; }
-.hero-sub {
-  margin-top: 22px; font-size: 16px; font-style: italic; font-weight: 300;
-  color: var(--canvas); letter-spacing: 0.03em;
-  opacity: 0; animation: rise 0.9s 0.8s ease-out forwards;
+    linear-gradient(to top,  rgba(17,16,9,1) 0%, rgba(17,16,9,0.6) 35%, rgba(17,16,9,0.0) 62%),
+    linear-gradient(to right, rgba(17,16,9,0.55) 0%, transparent 50%);
 }
 
-/* cockpit instrument */
-.cockpit-dial {
-  position: absolute; right: 52px; bottom: 64px; z-index: 2;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  opacity: 0; animation: rise 0.8s 1.1s ease-out forwards;
-}
-.dial-ring {
-  width: 62px; height: 62px; border-radius: 50%;
-  border: 1.5px solid rgba(196,154,60,0.3);
-  display: flex; align-items: center; justify-content: center; position: relative;
-}
-.dial-ring::before { content: ''; position: absolute; inset: 8px; border-radius: 50%; border: 1px dashed rgba(196,154,60,0.15); }
-.dial-needle {
-  width: 2px; height: 20px; border-radius: 2px;
-  background: linear-gradient(to top, var(--brass), transparent);
-  transform-origin: bottom center; transform: rotate(-25deg);
-  transition: transform 0.3s;
-}
-.dial-label { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--worn); }
-
-@keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
-
-/* GALLERY */
-#gallery { background: var(--cockpit); padding-top: 72px; }
-.sec-head { padding: 60px 48px 40px; display: flex; align-items: flex-end; justify-content: space-between; }
-.sec-title { font-family: 'Special Elite', serif; font-size: clamp(32px, 5vw, 60px); line-height: 1; }
-.sec-title small { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase; color: var(--brass); margin-bottom: 10px; }
-.sec-count { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; color: var(--worn); border: 1px solid rgba(107,87,64,0.4); padding: 5px 12px; }
-
-.gallery-grid {
-  display: grid; grid-template-columns: repeat(12, 1fr); gap: 2px; padding: 0 2px 2px;
-}
-.gi { position: relative; overflow: hidden; background: var(--riveted); cursor: pointer; }
-.gi:nth-child(1) { grid-column: 1/8; aspect-ratio: 4/3; }
-.gi:nth-child(2) { grid-column: 8/10; aspect-ratio: 4/3; }
-.gi:nth-child(3) { grid-column: 10/13; aspect-ratio: 4/3; }
-.gi:nth-child(4) { grid-column: 1/13; aspect-ratio: 21/7; }
-
-.gi img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: sepia(10%) saturate(0.88) brightness(0.86);
-  transition: transform 0.85s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.45s;
-}
-.gi:hover img { transform: scale(1.055); filter: sepia(0%) saturate(1.02) brightness(1); }
-.gi-cap {
-  position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 18px 14px;
-  background: linear-gradient(to top, rgba(26,19,10,0.93) 0%, transparent 100%);
-  transform: translateY(101%); transition: transform 0.42s cubic-bezier(0.25,0.46,0.45,0.94);
-}
-.gi:hover .gi-cap { transform: translateY(0); }
-.gi-cap span { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--canvas); }
-.gi:first-child::after {
-  content: 'EHSE'; position: absolute; top: 14px; right: 16px;
-  font-family: 'Special Elite', serif; font-size: 12px; letter-spacing: 0.12em; color: rgba(196,154,60,0.6); z-index: 2;
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 0 56px 72px;
+  max-width: 780px;
 }
 
-/* ABOUT */
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 14px;
+  opacity: 0; animation: fadeUp 0.7s 0.2s ease-out forwards;
+}
+.hero-eyebrow::before {
+  content: ''; width: 22px; height: 1px; background: var(--gold); flex-shrink: 0;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(60px, 10.5vw, 136px);
+  font-weight: 700;
+  line-height: 0.88;
+  color: var(--white);
+  opacity: 0; animation: fadeUp 0.85s 0.38s ease-out forwards;
+}
+.hero-title .italic {
+  font-style: italic;
+  font-weight: 400;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(232,223,200,0.3);
+  display: block;
+}
+
+.hero-tagline {
+  margin-top: 24px;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  opacity: 0; animation: fadeUp 0.85s 0.56s ease-out forwards;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px; right: 56px; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  opacity: 0; animation: fadeUp 0.7s 1s ease-out forwards;
+}
+.hero-scroll-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 0.35; } 50% { opacity: 1; } }
+.hero-scroll span {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--muted);
+  writing-mode: vertical-rl;
+}
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+/* ══════════════════════════════════════════
+   SHARED SECTION CHROME
+══════════════════════════════════════════ */
+.sec-header {
+  padding: 64px 48px 36px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--white);
+}
+.sec-title em {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.sec-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+}
+
+/* ══════════════════════════════════════════
+   PHOTO GRID
+══════════════════════════════════════════ */
+#shots { background: var(--bg); }
+
+.grid-wrap { padding: 0 2px 2px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 3px;
+  margin-bottom: 3px;
+}
+.grid:last-child { margin-bottom: 0; }
+
+/* column spans */
+.c7  { grid-column: span 7; }
+.c5  { grid-column: span 5; }
+.c4  { grid-column: span 4; }
+.c6  { grid-column: span 6; }
+.c12 { grid-column: span 12; }
+.c3  { grid-column: span 3; }
+.c9  { grid-column: span 9; }
+.c8  { grid-column: span 8; }
+
+/* photo cell */
+.p {
+  position: relative; overflow: hidden;
+  background: var(--surface); cursor: pointer;
+}
+.p-inner { position: relative; overflow: hidden; }
+
+/* aspect ratios */
+.r43  .p-inner { aspect-ratio: 4/3; }
+.r32  .p-inner { aspect-ratio: 3/2; }
+.r11  .p-inner { aspect-ratio: 1/1; }
+.r169 .p-inner { aspect-ratio: 16/9; }
+.r217 .p-inner { aspect-ratio: 21/7; }
+.r23  .p-inner { aspect-ratio: 2/3; }
+
+.p img {
+  width: 100%; height: 100%; display: block; object-fit: cover;
+  filter: brightness(0.84) saturate(0.88);
+  transition: transform 0.9s cubic-bezier(0.22,1,0.36,1), filter 0.5s;
+}
+.p:hover img {
+  transform: scale(1.06);
+  filter: brightness(1) saturate(1.02);
+}
+
+/* caption bar */
+.p-cap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 32px 18px 14px;
+  background: linear-gradient(to top, rgba(17,16,9,0.9) 0%, transparent 100%);
+  transform: translateY(100%);
+  transition: transform 0.42s cubic-bezier(0.22,1,0.36,1);
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.p:hover .p-cap { transform: translateY(0); }
+.p-cap-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text);
+}
+.p-cap-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.1em;
+  color: var(--gold-dim);
+}
+
+/* top-left badge */
+.p-badge {
+  position: absolute; top: 14px; left: 14px; z-index: 2;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(200,170,100,0.3);
+  padding: 3px 8px;
+  background: rgba(17,16,9,0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* ══════════════════════════════════════════
+   THIN RULE
+══════════════════════════════════════════ */
+.rule-line {
+  height: 1px;
+  background: var(--border);
+  margin: 0 48px;
+}
+
+/* ══════════════════════════════════════════
+   ABOUT
+══════════════════════════════════════════ */
 #about {
-  background: var(--leather); padding: 96px 48px;
-  display: grid; grid-template-columns: 440px 1fr; gap: 72px; align-items: start;
-}
-.photo-wrap { position: relative; }
-.photo-inner { position: relative; overflow: hidden; border: 1px solid rgba(196,154,60,0.18); }
-.photo-inner img { width: 100%; display: block; filter: sepia(15%) contrast(1.04); transition: filter 0.5s; }
-.photo-inner:hover img { filter: sepia(0%); }
-.filmstrip {
-  position: absolute; top: 0; left: -16px; bottom: 0; width: 12px;
-  display: flex; flex-direction: column; justify-content: space-around; padding: 10px 0;
-}
-.fhole { width: 8px; height: 7px; border-radius: 1px; background: var(--cockpit); border: 1px solid rgba(196,154,60,0.15); }
-.photo-coords {
-  margin-top: 12px; display: flex; justify-content: space-between;
-  font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 600;
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--worn);
+  background: var(--surface);
+  padding: 88px 48px;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 72px;
+  align-items: start;
 }
 
-.about-text .eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase; color: var(--brass); margin-bottom: 14px; }
-.about-text h2 { font-family: 'Special Elite', serif; font-size: clamp(30px, 4vw, 50px); line-height: 1.1; margin-bottom: 22px; }
-.rule { width: 32px; height: 1px; background: var(--brass-dim); margin-bottom: 24px; }
-.about-text p { font-size: 15.5px; font-weight: 300; line-height: 1.9; color: var(--canvas); margin-bottom: 16px; }
-.about-text em { color: var(--linen); font-style: italic; }
-.badges { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 28px; }
-.badge { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brass); border: 1px solid rgba(196,154,60,0.3); padding: 5px 12px; }
+.about-photo-col { display: flex; flex-direction: column; gap: 16px; }
 
-/* CONTACT */
+.about-photo-frame {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  position: relative;
+}
+.about-photo-frame img {
+  width: 100%; display: block;
+  filter: brightness(0.9) saturate(0.85);
+  transition: filter 0.5s;
+}
+.about-photo-frame:hover img { filter: brightness(1) saturate(1); }
+
+.about-photo-meta {
+  display: flex; justify-content: space-between;
+}
+.about-photo-meta span {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+.about-text-col { padding-top: 4px; }
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.about-h {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 3.5vw, 44px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.about-h em { font-style: italic; color: var(--muted); }
+
+.thin-rule { width: 32px; height: 1px; background: var(--gold-dim); margin: 22px 0; }
+
+.about-text-col p {
+  font-size: 15px;
+  line-height: 1.95;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.about-text-col p em { color: var(--text); font-style: italic; }
+
+.tags {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px;
+}
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(200,170,100,0.25);
+  padding: 5px 12px;
+}
+
+/* ══════════════════════════════════════════
+   BUSINESS CARD
+══════════════════════════════════════════ */
+#card {
+  background: var(--bg);
+  padding: 88px 48px;
+}
+
+.card-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.card-left .eyebrow { margin-bottom: 14px; }
+.card-left h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.card-left p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+.card-frame {
+  position: relative;
+  border: 1px solid var(--border-hi);
+  background: var(--surface);
+  overflow: hidden;
+  /* standard business card ratio 3.5 × 2 in */
+  aspect-ratio: 1.75;
+  display: flex; align-items: center; justify-content: center;
+}
+/* corner accents */
+.card-frame::before, .card-frame::after {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+  border-color: var(--gold);
+  border-style: solid;
+}
+.card-frame::before { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
+.card-frame::after  { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
+
+.card-placeholder {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  padding: 32px;
+  text-align: center;
+}
+.card-placeholder-icon {
+  width: 36px; height: 36px;
+  border: 1px dashed var(--faint);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.card-placeholder-icon svg { width: 16px; height: 16px; stroke: var(--gold-dim); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.card-placeholder p {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* when image is dropped in, it fills the frame */
+.card-frame img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: none; /* shown via JS once src is set */
+}
+
+/* drop hint */
+.card-frame.has-image .card-placeholder { display: none; }
+.card-frame.has-image img { display: block; }
+
+/* ══════════════════════════════════════════
+   CONTACT
+══════════════════════════════════════════ */
 #contact {
-  background: var(--cockpit); padding: 96px 48px;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start;
+  background: var(--surface);
+  padding: 88px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: start;
 }
-.contact-l .eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase; color: var(--brass); margin-bottom: 14px; }
-.contact-l h2 { font-family: 'Special Elite', serif; font-size: clamp(30px, 4vw, 52px); line-height: 1.05; margin-bottom: 20px; }
-.contact-l p { font-size: 15.5px; font-weight: 300; line-height: 1.85; color: var(--canvas); margin-bottom: 32px; }
-.cta {
-  display: inline-flex; align-items: center; gap: 12px;
-  font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
-  letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--cockpit); background: var(--brass); padding: 14px 26px;
-  text-decoration: none; transition: background 0.28s;
-}
-.cta:hover { background: var(--linen); }
-.contact-r { border-left: 1px solid rgba(196,154,60,0.12); padding-left: 56px; }
-.cf { padding: 20px 0; border-bottom: 1px solid rgba(196,154,60,0.08); }
-.cf-l { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase; color: var(--brass-dim); margin-bottom: 6px; }
-.cf-v { font-size: 14.5px; font-weight: 300; line-height: 1.65; color: var(--canvas); }
 
-/* FOOTER */
+.contact-l h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.contact-l p {
+  font-size: 14px; line-height: 1.9; color: var(--muted); margin-bottom: 32px;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--bg);
+  background: var(--gold);
+  padding: 14px 26px;
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s;
+}
+.btn:hover { background: var(--white); }
+
+.contact-r { padding-top: 52px; }
+.cf { padding: 18px 0; border-bottom: 1px solid var(--border); }
+.cf:first-child { border-top: 1px solid var(--border); }
+.cf-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 5px;
+}
+.cf-val { font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--muted); }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
 footer {
-  background: var(--leather); border-top: 1px solid rgba(196,154,60,0.1);
-  padding: 26px 48px; display: flex; justify-content: space-between; align-items: center;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 24px 48px;
+  display: flex; align-items: center; justify-content: space-between;
 }
-footer span { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--worn); }
-footer .mark { font-family: 'Special Elite', serif; font-size: 22px; color: var(--brass-dim); }
+.footer-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; color: var(--muted);
+}
+.footer-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--faint);
+}
 
-/* LIGHTBOX */
-.lb { position: fixed; inset: 0; background: rgba(10,7,3,0.97); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.32s; }
+/* ══════════════════════════════════════════
+   LIGHTBOX
+══════════════════════════════════════════ */
+.lb {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(8,7,4,0.97);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
 .lb.on { opacity: 1; pointer-events: all; }
-.lb img { max-width: 90vw; max-height: 86vh; object-fit: contain; transform: scale(0.96); transition: transform 0.32s; }
-.lb.on img { transform: scale(1); }
-.lb-x { position: absolute; top: 26px; right: 36px; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--worn); cursor: pointer; transition: color 0.22s; }
-.lb-x:hover { color: var(--linen); }
-.lb-n { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--worn); white-space: nowrap; }
-
-/* SCROLL REVEAL */
-.sr { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.sr.show { opacity: 1; transform: none; }
-.sr.d1 { transition-delay: 0.12s; }
-.sr.d2 { transition-delay: 0.24s; }
-.sr.d3 { transition-delay: 0.36s; }
-
-/* RESPONSIVE */
-@media (max-width: 860px) {
-  nav { padding: 0 20px; }
-  .nav-links { display: none; }
-  .hero-body { padding: 0 24px 48px; }
-  .cockpit-dial { display: none; }
-  .sec-head { padding: 48px 24px 32px; }
-  .gallery-grid { grid-template-columns: 1fr 1fr; }
-  .gi:nth-child(1) { grid-column: 1/3; aspect-ratio: 16/9; }
-  .gi:nth-child(2) { grid-column: 1/2; }
-  .gi:nth-child(3) { grid-column: 2/3; }
-  .gi:nth-child(4) { grid-column: 1/3; }
-  #about { grid-template-columns: 1fr; padding: 68px 24px; gap: 40px; }
-  .filmstrip { display: none; }
-  #contact { grid-template-columns: 1fr; padding: 68px 24px; gap: 44px; }
-  .contact-r { border-left: none; padding-left: 0; border-top: 1px solid rgba(196,154,60,0.12); padding-top: 36px; }
-  footer { flex-direction: column; gap: 12px; padding: 22px 24px; text-align: center; }
+.lb > img {
+  max-width: 92vw; max-height: 88vh; object-fit: contain;
+  transform: scale(0.97); transition: transform 0.3s;
 }
+.lb.on > img { transform: scale(1); }
+.lb-close {
+  position: absolute; top: 24px; right: 36px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--muted); cursor: pointer; transition: color 0.2s;
+}
+.lb-close:hover { color: var(--white); }
+.lb-label {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted); white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════ */
+.sr { opacity: 0; transform: translateY(20px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.sr.in { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.32s; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  nav { padding: 0 22px; }
+  .nav-links { display: none; }
+  .hero-content { padding: 0 24px 52px; }
+  .hero-scroll { display: none; }
+  .sec-header { padding: 48px 22px 28px; }
+  .grid-wrap { padding: 0 1px 1px; }
+  .grid { grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 2px; }
+  .c7,.c5,.c4,.c6,.c9,.c3,.c8 { grid-column: span 2; }
+  .c12 { grid-column: span 2; }
+  .r43 .p-inner, .r32 .p-inner, .r23 .p-inner,
+  .r11 .p-inner, .r169 .p-inner { aspect-ratio: 4/3; }
+  .r217 .p-inner { aspect-ratio: 16/9; }
+  #about { grid-template-columns: 1fr; padding: 60px 22px; gap: 36px; }
+  .card-inner { grid-template-columns: 1fr; padding: 0; gap: 36px; }
+  #card { padding: 60px 22px; }
+  #contact { grid-template-columns: 1fr; padding: 60px 22px; gap: 36px; }
+  .contact-r { padding-top: 0; }
+  footer { padding: 20px 22px; flex-direction: column; gap: 8px; text-align: center; }
+  .rule-line { margin: 0 22px; }
+}
+
 </style>
 </head>
 <body>
 
+<!-- ─── LIGHTBOX ─── -->
 <div class="lb" id="lb">
-  <div class="lb-x" onclick="closeLb()">Close ✕</div>
+  <div class="lb-close" onclick="closeLb()">Close ✕</div>
   <img src="" id="lb-img" alt="">
-  <div class="lb-n" id="lb-n"></div>
+  <div class="lb-label" id="lb-label"></div>
 </div>
 
+<!-- ─── NAV ─── -->
 <nav>
-  <a class="nav-logo" href="#">Max Gerlach<sup>Aviation</sup></a>
+  <a class="nav-logo" href="#">
+    <span class="nav-logo-name">Max Gerlach</span>
+    <span class="nav-logo-sub">Aviation</span>
+  </a>
   <ul class="nav-links">
-    <li><a href="#gallery">Shots</a></li>
+    <li><a href="#shots">Shots</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#card">Card</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
+<!-- ─── HERO ─── -->
 <section class="hero" id="home">
-  <div class="hero-bg"></div>
-  <div class="hero-vignette"></div>
-  <div class="hero-body">
-    <p class="hero-tag">EHSE · Breda, Netherlands · Aviation Photography</p>
-    <h1 class="hero-name">
-      Max<br>
-      <span class="ghost">Gerlach</span>
+  <div class="hero-img"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">EHSE · Breda, Netherlands</p>
+    <h1 class="hero-title">
+      Max
+      <span class="italic">Gerlach</span>
     </h1>
-    <p class="hero-sub">Warbirds, tail-draggers & the smell of avgas — captured from the air.</p>
+    <p class="hero-tagline">Warbirds, tail-draggers & the smell of avgas — captured from the air.</p>
   </div>
-  <div class="cockpit-dial">
-    <div class="dial-ring"><div class="dial-needle" id="needle"></div></div>
-    <span class="dial-label">EHSE</span>
-  </div>
-</section>
-
-<div style="background:var(--cockpit);">
-  <div class="rivet-row">
-    <div class="rivet"></div><div class="rivet"></div><div class="rivet"></div>
-    <div class="rivet"></div><div class="rivet"></div><div class="rivet"></div>
-    <div class="rivet"></div><div class="rivet"></div><div class="rivet"></div>
-  </div>
-</div>
-
-<section id="gallery">
-  <div class="sec-head sr">
-    <div class="sec-title">
-      <small>Portfolio</small>
-      Some of My Shots
-    </div>
-    <div class="sec-count sr d1">04 images</div>
-  </div>
-  <div class="gallery-grid">
-    <div class="gi sr"    onclick="openLb('https://airplanephotography.nl/images/A2A1.jpg','Boeing Stearman N1944S')">
-      <img src="https://airplanephotography.nl/images/A2A1.jpg" alt="Boeing Stearman N1944S" loading="lazy">
-      <div class="gi-cap"><span>Boeing Stearman N1944S</span></div>
-    </div>
-    <div class="gi sr d1" onclick="openLb('https://airplanephotography.nl/images/A2A2.jpg','Boeing Stearman N1944S')">
-      <img src="https://airplanephotography.nl/images/A2A2.jpg" alt="Boeing Stearman" loading="lazy">
-      <div class="gi-cap"><span>Stearman — Detail</span></div>
-    </div>
-    <div class="gi sr d2" onclick="openLb('https://airplanephotography.nl/images/A2A3.jpg','Blackshape Prime PH-4Q3')">
-      <img src="https://airplanephotography.nl/images/A2A3.jpg" alt="Blackshape Prime" loading="lazy">
-      <div class="gi-cap"><span>Blackshape Prime PH-4Q3</span></div>
-    </div>
-    <div class="gi sr d1" onclick="openLb('https://airplanephotography.nl/images/A2A4.jpg','Chipmunk OO-WPB')">
-      <img src="https://airplanephotography.nl/images/A2A4.jpg" alt="Chipmunk OO-WPB" loading="lazy">
-      <div class="gi-cap"><span>Chipmunk OO-WPB</span></div>
-    </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
   </div>
 </section>
 
-<div style="background:var(--leather);">
-  <div class="rivet-row">
-    <div class="rivet"></div><div class="rivet"></div><div class="rivet"></div>
-    <div class="rivet"></div><div class="rivet"></div><div class="rivet"></div>
-  </div>
-</div>
+<!-- ─── SHOTS ─── -->
+<section id="shots">
 
-<section id="about">
-  <div class="photo-wrap sr">
-    <div class="photo-inner">
-      <img src="https://airplanephotography.nl/images/ProfilePicture.jpeg" alt="Max Gerlach">
-      <div class="filmstrip">
-        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
-        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+  <div class="sec-header sr">
+    <h2 class="sec-title"><em>Portfolio</em>Shots</h2>
+    <span class="sec-meta">08 images</span>
+  </div>
+
+  <div class="grid-wrap">
+
+    <!-- Row 1: 7 + 5 -->
+    <div class="grid">
+      <div class="c7 r43 p" onclick="openLb('https://airplanephotography.nl/images/A2A1.jpg','Boeing Stearman N1944S')">
+        <div class="p-inner">
+          <span class="p-badge">EHSE</span>
+          <img src="https://airplanephotography.nl/images/A2A1.jpg" alt="Boeing Stearman N1944S" loading="lazy">
+        </div>
+        <div class="p-cap"><span class="p-cap-name">Boeing Stearman N1944S</span><span class="p-cap-num">01</span></div>
+      </div>
+      <div class="c5 r43 p" onclick="openLb('https://airplanephotography.nl/images/A2A2.jpg','Boeing Stearman N1944S')">
+        <div class="p-inner">
+          <img src="https://airplanephotography.nl/images/A2A2.jpg" alt="Boeing Stearman" loading="lazy">
+        </div>
+        <div class="p-cap"><span class="p-cap-name">Stearman — Detail</span><span class="p-cap-num">02</span></div>
       </div>
     </div>
-    <div class="photo-coords">
+
+    <!-- Row 2: 4 + 4 + 4 -->
+    <div class="grid">
+      <div class="c4 r32 p" onclick="openLb('https://airplanephotography.nl/images/A2A3.jpg','Blackshape Prime PH-4Q3')">
+        <div class="p-inner">
+          <img src="https://airplanephotography.nl/images/A2A3.jpg" alt="Blackshape Prime" loading="lazy">
+        </div>
+        <div class="p-cap"><span class="p-cap-name">Blackshape Prime PH-4Q3</span><span class="p-cap-num">03</span></div>
+      </div>
+      <div class="c4 r32 p" onclick="openLb('https://airplanephotography.nl/images/A2A4.jpg','Chipmunk OO-WPB')">
+        <div class="p-inner">
+          <img src="https://airplanephotography.nl/images/A2A4.jpg" alt="Chipmunk OO-WPB" loading="lazy">
+        </div>
+        <div class="p-cap"><span class="p-cap-name">Chipmunk OO-WPB</span><span class="p-cap-num">04</span></div>
+      </div>
+      <div class="c4 r32 p" onclick="openLb('https://airplanephotography.nl/images/A2A1.jpg','Boeing Stearman — Climbing')">
+        <div class="p-inner">
+          <img src="https://airplanephotography.nl/images/A2A1.jpg" alt="Stearman climbing" loading="lazy">
+        </div>
+        <div class="p-cap"><span class="p-cap-name">Stearman — Climbing</span><span class="p-cap-num">05</span></div>
+      </div>
+    </div>
+
+    <!-- Row 3: full panoramic -->
+    <div class="grid">
+      <div class="c12 r217 p" onclick="openLb('https://airplanephotography.nl/images/A2A2.jpg','Boeing Stearman — Full Frame')">
+        <div class="p-inner">
+          <img src="https://airplanephotography.nl/images/A2A2.jpg" alt="Stearman full frame" loading="lazy">
+        </div>
+        <div class="p-cap"><span class="p-cap-name">Boeing Stearman — Full Frame</span><span class="p-cap-num">06</span></div>
+      </div>
+    </div>
+
+    <!-- Row 4: 6 + 6 -->
+    <div class="grid">
+      <div class="c6 r169 p" onclick="openLb('https://airplanephotography.nl/images/A2A3.jpg','Blackshape Prime — Low Pass')">
+        <div class="p-inner">
+          <img src="https://airplanephotography.nl/images/A2A3.jpg" alt="Blackshape low pass" loading="lazy">
+        </div>
+        <div class="p-cap"><span class="p-cap-name">Blackshape — Low Pass</span><span class="p-cap-num">07</span></div>
+      </div>
+      <div class="c6 r169 p" onclick="openLb('https://airplanephotography.nl/images/A2A4.jpg','Chipmunk OO-WPB — Banking')">
+        <div class="p-inner">
+          <img src="https://airplanephotography.nl/images/A2A4.jpg" alt="Chipmunk banking" loading="lazy">
+        </div>
+        <div class="p-cap"><span class="p-cap-name">Chipmunk — Banking</span><span class="p-cap-num">08</span></div>
+      </div>
+    </div>
+
+  </div><!-- /grid-wrap -->
+</section>
+
+<!-- ─── RULE ─── -->
+<div class="rule-line" style="margin-top:64px;"></div>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="about-photo-col sr">
+    <div class="about-photo-frame">
+      <img src="https://airplanephotography.nl/images/ProfilePicture.jpeg" alt="Max Gerlach">
+    </div>
+    <div class="about-photo-meta">
       <span>Breda International · EHSE</span>
-      <span>51°33′N 4°33′E</span>
+      <span>51°33′N · 4°33′E</span>
     </div>
   </div>
-  <div class="about-text">
+
+  <div class="about-text-col">
     <p class="eyebrow sr">The Photographer</p>
-    <h2 class="sr d1">Who I Am</h2>
-    <div class="rule sr d1"></div>
-    <p class="sr d2">
-      Since I was young I loved planes. In recent years that turned into picking up a camera and heading out to my home airport — <em>Breda International Airport (EHSE)</em> — to capture the aircraft that live there.
-    </p>
-    <p class="sr d2">
-      My main interest is in <em>historic aircraft</em>, especially the ones from the <em>Vliegend Museum Seppe</em> based at EHSE. I've become a Volunteer at the museum and the <em>Flight Coördinator</em> — so I get pretty close to the machines I shoot.
-    </p>
-    <div class="badges sr d3">
-      <span class="badge">Warbirds</span>
-      <span class="badge">Air-to-Air</span>
-      <span class="badge">Historic Aircraft</span>
-      <span class="badge">Vliegend Museum Seppe</span>
-      <span class="badge">EHSE</span>
+    <h2 class="about-h sr d1">Who I <em>am</em></h2>
+    <div class="thin-rule sr d1"></div>
+    <p class="sr d2">Since I was young I loved planes. In recent years that turned into picking up a camera and heading out to my home airport — <em>Breda International Airport (EHSE)</em> — to capture the aircraft that live there.</p>
+    <p class="sr d2">My main interest is in <em>historic aircraft</em>, especially the ones from the <em>Vliegend Museum Seppe</em> based at EHSE. I've become a Volunteer at the museum and the <em>Flight Coördinator</em> — so I get pretty close to the machines I shoot.</p>
+    <div class="tags sr d3">
+      <span class="tag">Warbirds</span>
+      <span class="tag">Air-to-Air</span>
+      <span class="tag">Historic Aircraft</span>
+      <span class="tag">Vliegend Museum Seppe</span>
+      <span class="tag">EHSE</span>
     </div>
   </div>
 </section>
 
-<div style="background:var(--cockpit);">
-  <div class="rivet-row">
-    <div class="rivet"></div><div class="rivet"></div><div class="rivet"></div>
-    <div class="rivet"></div><div class="rivet"></div><div class="rivet"></div>
-    <div class="rivet"></div>
-  </div>
-</div>
+<!-- ─── RULE ─── -->
+<div class="rule-line"></div>
 
+<!-- ─── BUSINESS CARD ─── -->
+<section id="card">
+  <div class="card-inner">
+
+    <div>
+      <p class="eyebrow sr">Digital Business Card</p>
+      <h2 class="sr d1" style="font-family:'Playfair Display',serif; font-size:clamp(26px,3.5vw,42px); font-weight:400; color:var(--white); line-height:1.1; margin-bottom:16px;">
+        My Card
+      </h2>
+      <p class="sr d2" style="font-size:14px; line-height:1.9; color:var(--muted); margin-bottom:28px;">
+        Share it, print it, forward it. Anyone who wants to get in touch or licence a shot can reach me through the details on the card.
+      </p>
+      <a class="btn sr d3" href="mailto:mgerlach0168@gmail.com">Get in touch →</a>
+    </div>
+
+    <!-- Card frame — swap placeholder for your image by replacing YOUR-CARD-IMAGE.jpg -->
+    <div class="card-frame sr d1" id="cardFrame">
+      <div class="card-placeholder">
+        <div class="card-placeholder-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="7" y1="15" x2="12" y2="15"/></svg>
+        </div>
+        <p>Drop your business<br>card image here<br><br>or replace the src in<br>the HTML with your file</p>
+      </div>
+      <!-- ↓ Replace YOUR-CARD-IMAGE.jpg with your actual file name once you have it -->
+      <img id="cardImg" src="" alt="Max Gerlach Business Card">
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── RULE ─── -->
+<div class="rule-line"></div>
+
+<!-- ─── CONTACT ─── -->
 <section id="contact">
   <div class="contact-l sr">
     <p class="eyebrow">Get in Touch</p>
-    <h2>Drop Me<br>a Message</h2>
-    <p>Want to license a shot, use an image for editorial, or just talk planes? Send me an email — always happy to chat.</p>
-    <a class="cta" href="mailto:mgerlach0168@gmail.com">Email me →</a>
+    <h2>Drop me<br>a message</h2>
+    <p>Want to license a shot, use an image for editorial, or just talk planes? My inbox is always open.</p>
+    <a class="btn" href="mailto:mgerlach0168@gmail.com">Email me →</a>
   </div>
   <div class="contact-r sr d2">
-    <div class="cf">
-      <div class="cf-l">Email</div>
-      <div class="cf-v">mgerlach0168@gmail.com</div>
-    </div>
-    <div class="cf">
-      <div class="cf-l">Home Airport</div>
-      <div class="cf-v">Breda International Airport (EHSE)<br>North Brabant, Netherlands</div>
-    </div>
-    <div class="cf">
-      <div class="cf-l">Focus</div>
-      <div class="cf-v">Historic & warbird aircraft<br>Air-to-air photography</div>
-    </div>
-    <div class="cf">
-      <div class="cf-l">Museum Role</div>
-      <div class="cf-v">Volunteer & Flight Coördinator<br>Vliegend Museum Seppe</div>
-    </div>
+    <div class="cf"><div class="cf-label">Email</div><div class="cf-val">mgerlach0168@gmail.com</div></div>
+    <div class="cf"><div class="cf-label">Home Airport</div><div class="cf-val">Breda International (EHSE)<br>North Brabant, Netherlands</div></div>
+    <div class="cf"><div class="cf-label">Speciality</div><div class="cf-val">Historic & warbird aircraft<br>Air-to-air photography</div></div>
+    <div class="cf"><div class="cf-label">Museum Role</div><div class="cf-val">Volunteer & Flight Coördinator<br>Vliegend Museum Seppe</div></div>
   </div>
 </section>
 
+<!-- ─── FOOTER ─── -->
 <footer>
-  <span>© 2026 Max Gerlach — All shots mine</span>
-  <span class="mark">MG</span>
-  <span>Aviation Photography · EHSE</span>
+  <span class="footer-name">Max Gerlach</span>
+  <span class="footer-copy">© 2026 — All shots mine · EHSE</span>
 </footer>
 
 <script>
-function openLb(src, name) {
+/* ── Lightbox ─────────────────────── */
+function openLb(src, label) {
   document.getElementById('lb-img').src = src;
-  document.getElementById('lb-n').textContent = name;
+  document.getElementById('lb-label').textContent = label;
   document.getElementById('lb').classList.add('on');
   document.body.style.overflow = 'hidden';
 }
@@ -403,20 +805,37 @@ function closeLb() {
   document.getElementById('lb').classList.remove('on');
   document.body.style.overflow = '';
 }
-document.getElementById('lb').addEventListener('click', function(e) { if (e.target === this) closeLb(); });
+document.getElementById('lb').addEventListener('click', function(e) {
+  if (e.target === this) closeLb();
+});
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 
-const needle = document.getElementById('needle');
-if (needle) {
-  window.addEventListener('scroll', () => {
-    const p = Math.min(window.scrollY / (document.body.scrollHeight - window.innerHeight), 1);
-    needle.style.transform = `rotate(${-25 + p * 220}deg)`;
-  });
-}
+/* ── Drag-and-drop card image ──────── */
+const frame = document.getElementById('cardFrame');
+const cardImg = document.getElementById('cardImg');
 
+frame.addEventListener('dragover', e => { e.preventDefault(); frame.style.borderColor = 'var(--gold)'; });
+frame.addEventListener('dragleave', () => { frame.style.borderColor = ''; });
+frame.addEventListener('drop', e => {
+  e.preventDefault();
+  frame.style.borderColor = '';
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      cardImg.src = ev.target.result;
+      frame.classList.add('has-image');
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+/* ── Scroll reveal ─────────────────── */
 const obs = new IntersectionObserver(entries => {
-  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('show'); obs.unobserve(en.target); } });
-}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  entries.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); }
+  });
+}, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
 document.querySelectorAll('.sr').forEach(el => obs.observe(el));
 </script>
 </body>
