@@ -6,837 +6,834 @@
 <title>Max Gerlach — Aviation Photography</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ══════════════════════════════════════════
-   TOKENS
-══════════════════════════════════════════ */
-:root {
-  --bg:        #111009;
-  --surface:   #1c1810;
-  --border:    rgba(200,170,100,0.12);
-  --border-hi: rgba(200,170,100,0.28);
-  --gold:      #c8aa64;
-  --gold-dim:  #7a6535;
-  --text:      #e8dfc8;
-  --muted:     #8a7d65;
-  --faint:     #3d3520;
-  --white:     #f5f0e8;
-}
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f3ef;
+    --cream: #ede9e1;
+    --sky: #4a7fa5;
+    --sky-light: #b8d4e8;
+    --gold: #c8a96e;
+    --gold-dark: #8a6d3e;
+    --nav-h: 72px;
+  }
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
+  html { scroll-behavior: smooth; }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 300;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
 
-/* ══════════════════════════════════════════
-   NAV
-══════════════════════════════════════════ */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-  height: 56px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 48px;
-  background: rgba(17,16,9,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-}
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    z-index: 100;
+    transition: background 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(200,169,110,0.15);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,243,239,0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
 
-.nav-logo {
-  display: flex; align-items: baseline; gap: 10px;
-  text-decoration: none;
-}
-.nav-logo-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 17px;
-  color: var(--white);
-  letter-spacing: 0.02em;
-}
-.nav-logo-sub {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/1.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.05);
+    animation: heroZoom 12s ease-out forwards;
+  }
+  @keyframes heroZoom {
+    from { transform: scale(1.05); }
+    to { transform: scale(1.0); }
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(10,10,10,0.1) 0%,
+      rgba(10,10,10,0.0) 40%,
+      rgba(10,10,10,0.55) 70%,
+      rgba(10,10,10,0.92) 100%
+    );
+  }
+  .hero-content {
+    position: relative;
+    padding: 0 64px 80px;
+    max-width: 900px;
+    animation: fadeUp 1.2s 0.3s both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 10vw, 120px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+  .hero-title em {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    color: var(--sky-light);
+  }
+  .hero-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(245,243,239,0.65);
+    max-width: 420px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 32px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: background 0.25s, color 0.25s;
+  }
+  .hero-cta:hover {
+    background: var(--gold);
+    color: var(--black);
+  }
+  .hero-scroll {
+    position: absolute;
+    right: 48px;
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,243,239,0.4);
+    animation: fadeUp 1.2s 0.8s both;
+  }
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 48px;
+    background: rgba(245,243,239,0.3);
+    animation: scrollLine 2s 1.5s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.5) translateY(-12px); }
+    50% { opacity: 1; transform: scaleY(1) translateY(0); }
+  }
 
-.nav-links {
-  display: flex; gap: 36px; list-style: none;
-}
-.nav-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--gold); }
+  /* ── SECTION COMMON ── */
+  section { padding: 120px 0; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 64px; }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 6vw, 72px);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .section-title em {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    color: var(--sky-light);
+  }
 
-/* ══════════════════════════════════════════
-   HERO
-══════════════════════════════════════════ */
-.hero {
-  position: relative;
-  height: 100vh; min-height: 620px;
-  display: flex; align-items: flex-end;
-  overflow: hidden;
-}
+  /* ── FEATURED SHOTS ── */
+  #gallery { background: var(--black); }
+  .gallery-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+  }
+  .gallery-header .view-all {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,243,239,0.5);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(245,243,239,0.2);
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .gallery-header .view-all:hover { color: var(--gold); border-color: var(--gold); }
 
-.hero-img {
-  position: absolute; inset: 0;
-  background: url('https://airplanephotography.nl/images/A2A1.jpg') center 38% / cover no-repeat;
-  animation: heroIn 16s ease-out forwards;
-}
-@keyframes heroIn { from { transform: scale(1.06); } to { transform: scale(1); } }
+  /* Masonry-style grid */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 3px;
+  }
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .gallery-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,10,0);
+    transition: background 0.35s;
+  }
+  .gallery-item:hover::after { background: rgba(10,10,10,0.3); }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .gallery-item:hover img { transform: scale(1.06); }
 
-.hero-img::after {
-  content: ''; position: absolute; inset: 0;
-  background:
-    linear-gradient(to top,  rgba(17,16,9,1) 0%, rgba(17,16,9,0.6) 35%, rgba(17,16,9,0.0) 62%),
-    linear-gradient(to right, rgba(17,16,9,0.55) 0%, transparent 50%);
-}
+  /* Layout positions */
+  .gi-1  { grid-column: 1/8;  grid-row: 1; aspect-ratio: 16/9; }
+  .gi-2  { grid-column: 8/13; grid-row: 1; aspect-ratio: 4/3; }
+  .gi-3  { grid-column: 1/5;  grid-row: 2; aspect-ratio: 4/3; }
+  .gi-4  { grid-column: 5/9;  grid-row: 2; aspect-ratio: 4/3; }
+  .gi-5  { grid-column: 9/13; grid-row: 2; aspect-ratio: 4/3; }
+  .gi-6  { grid-column: 1/6;  grid-row: 3; aspect-ratio: 3/2; }
+  .gi-7  { grid-column: 6/13; grid-row: 3; aspect-ratio: 16/9; }
 
-.hero-content {
-  position: relative; z-index: 2;
-  padding: 0 56px 72px;
-  max-width: 780px;
-}
+  /* Caption overlay */
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 48px 20px 16px;
+    background: linear-gradient(transparent, rgba(10,10,10,0.7));
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,243,239,0.8);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 2;
+  }
+  .gallery-item:hover .gallery-caption { opacity: 1; }
 
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
-  display: flex; align-items: center; gap: 14px;
-  opacity: 0; animation: fadeUp 0.7s 0.2s ease-out forwards;
-}
-.hero-eyebrow::before {
-  content: ''; width: 22px; height: 1px; background: var(--gold); flex-shrink: 0;
-}
+  /* ── STRIP / FULL-BLEED ── */
+  #strip {
+    padding: 0;
+    height: 45vw;
+    max-height: 600px;
+    overflow: hidden;
+    display: flex;
+    gap: 3px;
+  }
+  #strip .strip-img {
+    flex: 1;
+    overflow: hidden;
+  }
+  #strip .strip-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), flex 0.5s;
+    filter: grayscale(20%);
+  }
+  #strip .strip-img:hover { flex: 2; }
+  #strip .strip-img:hover img { transform: scale(1.04); filter: grayscale(0%); }
 
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(60px, 10.5vw, 136px);
-  font-weight: 700;
-  line-height: 0.88;
-  color: var(--white);
-  opacity: 0; animation: fadeUp 0.85s 0.38s ease-out forwards;
-}
-.hero-title .italic {
-  font-style: italic;
-  font-weight: 400;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(232,223,200,0.3);
-  display: block;
-}
+  /* ── ABOUT ── */
+  #about { background: #0f0f0e; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img-wrap::before {
+    content: '';
+    position: absolute;
+    top: -16px; left: -16px;
+    right: 16px; bottom: 16px;
+    border: 1px solid var(--gold);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .about-img-wrap img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    filter: grayscale(15%) contrast(1.05);
+  }
+  .about-text .section-title { margin-bottom: 32px; }
+  .about-body {
+    font-size: 17px;
+    line-height: 1.78;
+    color: rgba(245,243,239,0.65);
+    margin-bottom: 20px;
+  }
+  .about-body strong {
+    color: var(--white);
+    font-weight: 400;
+  }
+  .about-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(245,243,239,0.1);
+  }
+  .stat-item {}
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,243,239,0.4);
+  }
 
-.hero-tagline {
-  margin-top: 24px;
-  font-size: 15px;
-  font-style: italic;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-  opacity: 0; animation: fadeUp 0.85s 0.56s ease-out forwards;
-}
+  /* ── MORE PHOTOS ── */
+  #more { background: var(--black); }
+  .more-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+  }
+  .more-item {
+    overflow: hidden;
+    aspect-ratio: 1;
+    position: relative;
+    cursor: pointer;
+  }
+  .more-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .more-item:hover img { transform: scale(1.08); }
 
-.hero-scroll {
-  position: absolute;
-  bottom: 40px; right: 56px; z-index: 2;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  opacity: 0; animation: fadeUp 0.7s 1s ease-out forwards;
-}
-.hero-scroll-line {
-  width: 1px; height: 48px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
-  animation: pulse 2.2s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100% { opacity: 0.35; } 50% { opacity: 1; } }
-.hero-scroll span {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px; letter-spacing: 0.22em;
-  text-transform: uppercase; color: var(--muted);
-  writing-mode: vertical-rl;
-}
+  /* ── CONTACT ── */
+  #contact { background: #0a0908; }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-left {}
+  .contact-left .section-title { margin-bottom: 24px; }
+  .contact-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(245,243,239,0.55);
+    margin-bottom: 48px;
+  }
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 15px;
+    color: rgba(245,243,239,0.6);
+  }
+  .contact-row a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-row a:hover { color: var(--gold); }
+  .contact-icon {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(200,169,110,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245,243,239,0.4);
+  }
+  .form-group input,
+  .form-group textarea {
+    background: rgba(245,243,239,0.04);
+    border: 1px solid rgba(245,243,239,0.12);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 14px 16px;
+    outline: none;
+    resize: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group textarea { min-height: 120px; }
+  .form-submit {
+    padding: 16px 36px;
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .form-submit:hover { background: #d4b87a; transform: translateY(-1px); }
+  .form-submit:active { transform: translateY(0); }
 
-@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid rgba(245,243,239,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(245,243,239,0.3);
+    letter-spacing: 0.08em;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    color: rgba(245,243,239,0.2);
+    text-decoration: none;
+  }
+  .footer-logo span { color: rgba(200,169,110,0.4); }
 
-/* ══════════════════════════════════════════
-   SHARED SECTION CHROME
-══════════════════════════════════════════ */
-.sec-header {
-  padding: 64px 48px 36px;
-  display: flex; align-items: flex-end; justify-content: space-between;
-}
-.sec-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(28px, 4vw, 48px);
-  font-weight: 400;
-  line-height: 1;
-  color: var(--white);
-}
-.sec-title em {
-  display: block;
-  font-family: 'DM Mono', monospace;
-  font-style: normal;
-  font-size: 9px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 10px;
-}
-.sec-meta {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  border: 1px solid var(--border);
-  padding: 5px 12px;
-}
+  /* ── LIGHTBOX ── */
+  #lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(5,5,5,0.96);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  #lightbox.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  #lightbox img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.8);
+  }
+  .lb-close {
+    position: fixed;
+    top: 28px; right: 36px;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,243,239,0.5);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .lb-close:hover { color: var(--gold); }
+  .lb-prev, .lb-next {
+    position: fixed;
+    top: 50%; transform: translateY(-50%);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,243,239,0.4);
+    cursor: pointer;
+    padding: 20px;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .lb-prev:hover, .lb-next:hover { color: var(--gold); }
+  .lb-prev { left: 24px; }
+  .lb-next { right: 24px; }
 
-/* ══════════════════════════════════════════
-   PHOTO GRID
-══════════════════════════════════════════ */
-#shots { background: var(--bg); }
-
-.grid-wrap { padding: 0 2px 2px; }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 3px;
-  margin-bottom: 3px;
-}
-.grid:last-child { margin-bottom: 0; }
-
-/* column spans */
-.c7  { grid-column: span 7; }
-.c5  { grid-column: span 5; }
-.c4  { grid-column: span 4; }
-.c6  { grid-column: span 6; }
-.c12 { grid-column: span 12; }
-.c3  { grid-column: span 3; }
-.c9  { grid-column: span 9; }
-.c8  { grid-column: span 8; }
-
-/* photo cell */
-.p {
-  position: relative; overflow: hidden;
-  background: var(--surface); cursor: pointer;
-}
-.p-inner { position: relative; overflow: hidden; }
-
-/* aspect ratios */
-.r43  .p-inner { aspect-ratio: 4/3; }
-.r32  .p-inner { aspect-ratio: 3/2; }
-.r11  .p-inner { aspect-ratio: 1/1; }
-.r169 .p-inner { aspect-ratio: 16/9; }
-.r217 .p-inner { aspect-ratio: 21/7; }
-.r23  .p-inner { aspect-ratio: 2/3; }
-
-.p img {
-  width: 100%; height: 100%; display: block; object-fit: cover;
-  filter: brightness(0.84) saturate(0.88);
-  transition: transform 0.9s cubic-bezier(0.22,1,0.36,1), filter 0.5s;
-}
-.p:hover img {
-  transform: scale(1.06);
-  filter: brightness(1) saturate(1.02);
-}
-
-/* caption bar */
-.p-cap {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 32px 18px 14px;
-  background: linear-gradient(to top, rgba(17,16,9,0.9) 0%, transparent 100%);
-  transform: translateY(100%);
-  transition: transform 0.42s cubic-bezier(0.22,1,0.36,1);
-  display: flex; align-items: flex-end; justify-content: space-between;
-}
-.p:hover .p-cap { transform: translateY(0); }
-.p-cap-name {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--text);
-}
-.p-cap-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px; letter-spacing: 0.1em;
-  color: var(--gold-dim);
-}
-
-/* top-left badge */
-.p-badge {
-  position: absolute; top: 14px; left: 14px; z-index: 2;
-  font-family: 'DM Mono', monospace;
-  font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--gold);
-  border: 1px solid rgba(200,170,100,0.3);
-  padding: 3px 8px;
-  background: rgba(17,16,9,0.5);
-  backdrop-filter: blur(4px);
-}
-
-/* ══════════════════════════════════════════
-   THIN RULE
-══════════════════════════════════════════ */
-.rule-line {
-  height: 1px;
-  background: var(--border);
-  margin: 0 48px;
-}
-
-/* ══════════════════════════════════════════
-   ABOUT
-══════════════════════════════════════════ */
-#about {
-  background: var(--surface);
-  padding: 88px 48px;
-  display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: 72px;
-  align-items: start;
-}
-
-.about-photo-col { display: flex; flex-direction: column; gap: 16px; }
-
-.about-photo-frame {
-  overflow: hidden;
-  border: 1px solid var(--border);
-  position: relative;
-}
-.about-photo-frame img {
-  width: 100%; display: block;
-  filter: brightness(0.9) saturate(0.85);
-  transition: filter 0.5s;
-}
-.about-photo-frame:hover img { filter: brightness(1) saturate(1); }
-
-.about-photo-meta {
-  display: flex; justify-content: space-between;
-}
-.about-photo-meta span {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--muted);
-}
-
-.about-text-col { padding-top: 4px; }
-
-.eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 14px;
-}
-
-.about-h {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(26px, 3.5vw, 44px);
-  font-weight: 400;
-  line-height: 1.1;
-  color: var(--white);
-  margin-bottom: 4px;
-}
-.about-h em { font-style: italic; color: var(--muted); }
-
-.thin-rule { width: 32px; height: 1px; background: var(--gold-dim); margin: 22px 0; }
-
-.about-text-col p {
-  font-size: 15px;
-  line-height: 1.95;
-  color: var(--muted);
-  margin-bottom: 14px;
-}
-.about-text-col p em { color: var(--text); font-style: italic; }
-
-.tags {
-  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px;
-}
-.tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--gold);
-  border: 1px solid rgba(200,170,100,0.25);
-  padding: 5px 12px;
-}
-
-/* ══════════════════════════════════════════
-   BUSINESS CARD
-══════════════════════════════════════════ */
-#card {
-  background: var(--bg);
-  padding: 88px 48px;
-}
-
-.card-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px;
-  align-items: center;
-}
-
-.card-left .eyebrow { margin-bottom: 14px; }
-.card-left h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(26px, 3.5vw, 42px);
-  font-weight: 400;
-  color: var(--white);
-  line-height: 1.1;
-  margin-bottom: 16px;
-}
-.card-left p {
-  font-size: 14px;
-  line-height: 1.9;
-  color: var(--muted);
-  margin-bottom: 28px;
-}
-
-.card-frame {
-  position: relative;
-  border: 1px solid var(--border-hi);
-  background: var(--surface);
-  overflow: hidden;
-  /* standard business card ratio 3.5 × 2 in */
-  aspect-ratio: 1.75;
-  display: flex; align-items: center; justify-content: center;
-}
-/* corner accents */
-.card-frame::before, .card-frame::after {
-  content: '';
-  position: absolute;
-  width: 16px; height: 16px;
-  border-color: var(--gold);
-  border-style: solid;
-}
-.card-frame::before { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
-.card-frame::after  { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
-
-.card-placeholder {
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
-  padding: 32px;
-  text-align: center;
-}
-.card-placeholder-icon {
-  width: 36px; height: 36px;
-  border: 1px dashed var(--faint);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-}
-.card-placeholder-icon svg { width: 16px; height: 16px; stroke: var(--gold-dim); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.card-placeholder p {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-/* when image is dropped in, it fills the frame */
-.card-frame img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: none; /* shown via JS once src is set */
-}
-
-/* drop hint */
-.card-frame.has-image .card-placeholder { display: none; }
-.card-frame.has-image img { display: block; }
-
-/* ══════════════════════════════════════════
-   CONTACT
-══════════════════════════════════════════ */
-#contact {
-  background: var(--surface);
-  padding: 88px 48px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 72px;
-  align-items: start;
-}
-
-.contact-l h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(26px, 3.5vw, 42px);
-  font-weight: 400;
-  color: var(--white);
-  line-height: 1.1;
-  margin-bottom: 16px;
-}
-.contact-l p {
-  font-size: 14px; line-height: 1.9; color: var(--muted); margin-bottom: 32px;
-}
-.btn {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--bg);
-  background: var(--gold);
-  padding: 14px 26px;
-  text-decoration: none;
-  transition: background 0.25s, color 0.25s;
-}
-.btn:hover { background: var(--white); }
-
-.contact-r { padding-top: 52px; }
-.cf { padding: 18px 0; border-bottom: 1px solid var(--border); }
-.cf:first-child { border-top: 1px solid var(--border); }
-.cf-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--gold-dim);
-  margin-bottom: 5px;
-}
-.cf-val { font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--muted); }
-
-/* ══════════════════════════════════════════
-   FOOTER
-══════════════════════════════════════════ */
-footer {
-  background: var(--bg);
-  border-top: 1px solid var(--border);
-  padding: 24px 48px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.footer-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 15px; color: var(--muted);
-}
-.footer-copy {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--faint);
-}
-
-/* ══════════════════════════════════════════
-   LIGHTBOX
-══════════════════════════════════════════ */
-.lb {
-  position: fixed; inset: 0; z-index: 9000;
-  background: rgba(8,7,4,0.97);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.3s;
-}
-.lb.on { opacity: 1; pointer-events: all; }
-.lb > img {
-  max-width: 92vw; max-height: 88vh; object-fit: contain;
-  transform: scale(0.97); transition: transform 0.3s;
-}
-.lb.on > img { transform: scale(1); }
-.lb-close {
-  position: absolute; top: 24px; right: 36px;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--muted); cursor: pointer; transition: color 0.2s;
-}
-.lb-close:hover { color: var(--white); }
-.lb-label {
-  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--muted); white-space: nowrap;
-}
-
-/* ══════════════════════════════════════════
-   SCROLL REVEAL
-══════════════════════════════════════════ */
-.sr { opacity: 0; transform: translateY(20px); transition: opacity 0.75s ease, transform 0.75s ease; }
-.sr.in { opacity: 1; transform: none; }
-.d1 { transition-delay: 0.1s; }
-.d2 { transition-delay: 0.2s; }
-.d3 { transition-delay: 0.32s; }
-
-/* ══════════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════════ */
-@media (max-width: 900px) {
-  nav { padding: 0 22px; }
-  .nav-links { display: none; }
-  .hero-content { padding: 0 24px 52px; }
-  .hero-scroll { display: none; }
-  .sec-header { padding: 48px 22px 28px; }
-  .grid-wrap { padding: 0 1px 1px; }
-  .grid { grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 2px; }
-  .c7,.c5,.c4,.c6,.c9,.c3,.c8 { grid-column: span 2; }
-  .c12 { grid-column: span 2; }
-  .r43 .p-inner, .r32 .p-inner, .r23 .p-inner,
-  .r11 .p-inner, .r169 .p-inner { aspect-ratio: 4/3; }
-  .r217 .p-inner { aspect-ratio: 16/9; }
-  #about { grid-template-columns: 1fr; padding: 60px 22px; gap: 36px; }
-  .card-inner { grid-template-columns: 1fr; padding: 0; gap: 36px; }
-  #card { padding: 60px 22px; }
-  #contact { grid-template-columns: 1fr; padding: 60px 22px; gap: 36px; }
-  .contact-r { padding-top: 0; }
-  footer { padding: 20px 22px; flex-direction: column; gap: 8px; text-align: center; }
-  .rule-line { margin: 0 22px; }
-}
-
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 </style>
 </head>
 <body>
 
-<!-- ─── LIGHTBOX ─── -->
-<div class="lb" id="lb">
-  <div class="lb-close" onclick="closeLb()">Close ✕</div>
-  <img src="" id="lb-img" alt="">
-  <div class="lb-label" id="lb-label"></div>
-</div>
-
-<!-- ─── NAV ─── -->
-<nav>
-  <a class="nav-logo" href="#">
-    <span class="nav-logo-name">Max Gerlach</span>
-    <span class="nav-logo-sub">Aviation</span>
-  </a>
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Max<span>.</span>Gerlach</a>
   <ul class="nav-links">
-    <li><a href="#shots">Shots</a></li>
+    <li><a href="#gallery">Gallery</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#card">Card</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<!-- ─── HERO ─── -->
-<section class="hero" id="home">
-  <div class="hero-img"></div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
   <div class="hero-content">
-    <p class="hero-eyebrow">EHSE · Breda, Netherlands</p>
-    <h1 class="hero-title">
-      Max
-      <span class="italic">Gerlach</span>
-    </h1>
-    <p class="hero-tagline">Warbirds, tail-draggers & the smell of avgas — captured from the air.</p>
+    <div class="hero-eyebrow">Aviation Photography — Breda, Netherlands</div>
+    <h1 class="hero-title">Through<br>The <em>Lens</em><br>of Flight</h1>
+    <p class="hero-sub">Documenting historic aircraft at Breda International Airport (EHSE) and beyond — with a passion for warbirds and vintage machines.</p>
+    <a href="#gallery" class="hero-cta">View the Gallery →</a>
   </div>
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-    <span>Scroll</span>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- FEATURED GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="gallery-header reveal">
+      <div>
+        <div class="section-label">Featured shots</div>
+        <h2 class="section-title">Recent <em>Work</em></h2>
+      </div>
+      <a href="#more" class="view-all">View all photos ↓</a>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item gi-1" onclick="openLb(0)">
+        <img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/2.jpg" alt="Aviation shot">
+        <div class="gallery-caption">Breda — EHSE</div>
+      </div>
+      <div class="gallery-item gi-2" onclick="openLb(1)">
+        <img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/3.jpg" alt="Aviation shot">
+      </div>
+      <div class="gallery-item gi-3" onclick="openLb(2)">
+        <img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/4.jpg" alt="Aviation shot">
+      </div>
+      <div class="gallery-item gi-4" onclick="openLb(3)">
+        <img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/5.jpg" alt="Aviation shot">
+      </div>
+      <div class="gallery-item gi-5" onclick="openLb(4)">
+        <img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/6.jpg" alt="Aviation shot">
+      </div>
+      <div class="gallery-item gi-6" onclick="openLb(5)">
+        <img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/7.jpg" alt="Aviation shot">
+      </div>
+      <div class="gallery-item gi-7" onclick="openLb(6)">
+        <img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/8.jpg" alt="Aviation shot">
+        <div class="gallery-caption">Vliegend Museum Seppe</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ─── SHOTS ─── -->
-<section id="shots">
+<!-- STRIP -->
+<div id="strip">
+  <div class="strip-img"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/9.jpg" alt=""></div>
+  <div class="strip-img"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/10.jpg" alt=""></div>
+  <div class="strip-img"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/11.jpg" alt=""></div>
+  <div class="strip-img"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/12.jpg" alt=""></div>
+  <div class="strip-img"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/13.jpg" alt=""></div>
+</div>
 
-  <div class="sec-header sr">
-    <h2 class="sec-title"><em>Portfolio</em>Shots</h2>
-    <span class="sec-meta">08 images</span>
-  </div>
-
-  <div class="grid-wrap">
-
-    <!-- Row 1: 7 + 5 -->
-    <div class="grid">
-      <div class="c7 r43 p" onclick="openLb('https://airplanephotography.nl/images/A2A1.jpg','Boeing Stearman N1944S')">
-        <div class="p-inner">
-          <span class="p-badge">EHSE</span>
-          <img src="https://airplanephotography.nl/images/A2A1.jpg" alt="Boeing Stearman N1944S" loading="lazy">
-        </div>
-        <div class="p-cap"><span class="p-cap-name">Boeing Stearman N1944S</span><span class="p-cap-num">01</span></div>
-      </div>
-      <div class="c5 r43 p" onclick="openLb('https://airplanephotography.nl/images/A2A2.jpg','Boeing Stearman N1944S')">
-        <div class="p-inner">
-          <img src="https://airplanephotography.nl/images/A2A2.jpg" alt="Boeing Stearman" loading="lazy">
-        </div>
-        <div class="p-cap"><span class="p-cap-name">Stearman — Detail</span><span class="p-cap-num">02</span></div>
-      </div>
-    </div>
-
-    <!-- Row 2: 4 + 4 + 4 -->
-    <div class="grid">
-      <div class="c4 r32 p" onclick="openLb('https://airplanephotography.nl/images/A2A3.jpg','Blackshape Prime PH-4Q3')">
-        <div class="p-inner">
-          <img src="https://airplanephotography.nl/images/A2A3.jpg" alt="Blackshape Prime" loading="lazy">
-        </div>
-        <div class="p-cap"><span class="p-cap-name">Blackshape Prime PH-4Q3</span><span class="p-cap-num">03</span></div>
-      </div>
-      <div class="c4 r32 p" onclick="openLb('https://airplanephotography.nl/images/A2A4.jpg','Chipmunk OO-WPB')">
-        <div class="p-inner">
-          <img src="https://airplanephotography.nl/images/A2A4.jpg" alt="Chipmunk OO-WPB" loading="lazy">
-        </div>
-        <div class="p-cap"><span class="p-cap-name">Chipmunk OO-WPB</span><span class="p-cap-num">04</span></div>
-      </div>
-      <div class="c4 r32 p" onclick="openLb('https://airplanephotography.nl/images/A2A1.jpg','Boeing Stearman — Climbing')">
-        <div class="p-inner">
-          <img src="https://airplanephotography.nl/images/A2A1.jpg" alt="Stearman climbing" loading="lazy">
-        </div>
-        <div class="p-cap"><span class="p-cap-name">Stearman — Climbing</span><span class="p-cap-num">05</span></div>
-      </div>
-    </div>
-
-    <!-- Row 3: full panoramic -->
-    <div class="grid">
-      <div class="c12 r217 p" onclick="openLb('https://airplanephotography.nl/images/A2A2.jpg','Boeing Stearman — Full Frame')">
-        <div class="p-inner">
-          <img src="https://airplanephotography.nl/images/A2A2.jpg" alt="Stearman full frame" loading="lazy">
-        </div>
-        <div class="p-cap"><span class="p-cap-name">Boeing Stearman — Full Frame</span><span class="p-cap-num">06</span></div>
-      </div>
-    </div>
-
-    <!-- Row 4: 6 + 6 -->
-    <div class="grid">
-      <div class="c6 r169 p" onclick="openLb('https://airplanephotography.nl/images/A2A3.jpg','Blackshape Prime — Low Pass')">
-        <div class="p-inner">
-          <img src="https://airplanephotography.nl/images/A2A3.jpg" alt="Blackshape low pass" loading="lazy">
-        </div>
-        <div class="p-cap"><span class="p-cap-name">Blackshape — Low Pass</span><span class="p-cap-num">07</span></div>
-      </div>
-      <div class="c6 r169 p" onclick="openLb('https://airplanephotography.nl/images/A2A4.jpg','Chipmunk OO-WPB — Banking')">
-        <div class="p-inner">
-          <img src="https://airplanephotography.nl/images/A2A4.jpg" alt="Chipmunk banking" loading="lazy">
-        </div>
-        <div class="p-cap"><span class="p-cap-name">Chipmunk — Banking</span><span class="p-cap-num">08</span></div>
-      </div>
-    </div>
-
-  </div><!-- /grid-wrap -->
-</section>
-
-<!-- ─── RULE ─── -->
-<div class="rule-line" style="margin-top:64px;"></div>
-
-<!-- ─── ABOUT ─── -->
+<!-- ABOUT -->
 <section id="about">
-  <div class="about-photo-col sr">
-    <div class="about-photo-frame">
-      <img src="https://airplanephotography.nl/images/ProfilePicture.jpeg" alt="Max Gerlach">
-    </div>
-    <div class="about-photo-meta">
-      <span>Breda International · EHSE</span>
-      <span>51°33′N · 4°33′E</span>
-    </div>
-  </div>
-
-  <div class="about-text-col">
-    <p class="eyebrow sr">The Photographer</p>
-    <h2 class="about-h sr d1">Who I <em>am</em></h2>
-    <div class="thin-rule sr d1"></div>
-    <p class="sr d2">Since I was young I loved planes. In recent years that turned into picking up a camera and heading out to my home airport — <em>Breda International Airport (EHSE)</em> — to capture the aircraft that live there.</p>
-    <p class="sr d2">My main interest is in <em>historic aircraft</em>, especially the ones from the <em>Vliegend Museum Seppe</em> based at EHSE. I've become a Volunteer at the museum and the <em>Flight Coördinator</em> — so I get pretty close to the machines I shoot.</p>
-    <div class="tags sr d3">
-      <span class="tag">Warbirds</span>
-      <span class="tag">Air-to-Air</span>
-      <span class="tag">Historic Aircraft</span>
-      <span class="tag">Vliegend Museum Seppe</span>
-      <span class="tag">EHSE</span>
-    </div>
-  </div>
-</section>
-
-<!-- ─── RULE ─── -->
-<div class="rule-line"></div>
-
-<!-- ─── BUSINESS CARD ─── -->
-<section id="card">
-  <div class="card-inner">
-
-    <div>
-      <p class="eyebrow sr">Digital Business Card</p>
-      <h2 class="sr d1" style="font-family:'Playfair Display',serif; font-size:clamp(26px,3.5vw,42px); font-weight:400; color:var(--white); line-height:1.1; margin-bottom:16px;">
-        My Card
-      </h2>
-      <p class="sr d2" style="font-size:14px; line-height:1.9; color:var(--muted); margin-bottom:28px;">
-        Share it, print it, forward it. Anyone who wants to get in touch or licence a shot can reach me through the details on the card.
-      </p>
-      <a class="btn sr d3" href="mailto:mgerlach0168@gmail.com">Get in touch →</a>
-    </div>
-
-    <!-- Card frame — swap placeholder for your image by replacing YOUR-CARD-IMAGE.jpg -->
-    <div class="card-frame sr d1" id="cardFrame">
-      <div class="card-placeholder">
-        <div class="card-placeholder-icon">
-          <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="7" y1="15" x2="12" y2="15"/></svg>
-        </div>
-        <p>Drop your business<br>card image here<br><br>or replace the src in<br>the HTML with your file</p>
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <img src="https://airplanephotography.nl/images/ProfilePicture.jpeg" alt="Max Gerlach">
       </div>
-      <!-- ↓ Replace YOUR-CARD-IMAGE.jpg with your actual file name once you have it -->
-      <img id="cardImg" src="" alt="Max Gerlach Business Card">
+      <div class="about-text">
+        <div class="section-label reveal">About me</div>
+        <h2 class="section-title reveal">Behind <em>the Camera</em></h2>
+        <p class="about-body reveal">
+          Since I was young I have loved planes. Over the past years I've started photographing aircraft at my home airport, <strong>Breda International Airport (EHSE)</strong>.
+        </p>
+        <p class="about-body reveal">
+          My main interest lies in <strong>historic aircraft</strong> — especially those of the <strong>Vliegend Museum Seppe</strong> based at EHSE. I've recently become a volunteer at the museum and serve as the <strong>Flight Coördinator</strong>.
+        </p>
+        <div class="about-stats reveal">
+          <div class="stat-item">
+            <div class="stat-num">24+</div>
+            <div class="stat-label">Photos taken</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">EHSE</div>
+            <div class="stat-label">Home airport</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">Vol.</div>
+            <div class="stat-label">Museum volunteer</div>
+          </div>
+        </div>
+      </div>
     </div>
-
   </div>
 </section>
 
-<!-- ─── RULE ─── -->
-<div class="rule-line"></div>
+<!-- MORE PHOTOS -->
+<section id="more">
+  <div class="container">
+    <div class="section-label reveal">Full portfolio</div>
+    <h2 class="section-title reveal">More <em>Shots</em></h2>
+    <div style="height:40px"></div>
+    <div class="more-grid reveal">
+      <div class="more-item" onclick="openLb(7)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/14.jpg" alt=""></div>
+      <div class="more-item" onclick="openLb(8)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/15.jpg" alt=""></div>
+      <div class="more-item" onclick="openLb(9)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/16.jpg" alt=""></div>
+      <div class="more-item" onclick="openLb(10)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/17.jpg" alt=""></div>
+      <div class="more-item" onclick="openLb(11)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/18.jpg" alt=""></div>
+      <div class="more-item" onclick="openLb(12)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/19.jpg" alt=""></div>
+      <div class="more-item" onclick="openLb(13)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/20.jpg" alt=""></div>
+      <div class="more-item" onclick="openLb(14)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/21.jpg" alt=""></div>
+      <div class="more-item" onclick="openLb(15)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/22.jpg" alt=""></div>
+      <div class="more-item" onclick="openLb(16)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/23.jpg" alt=""></div>
+      <div class="more-item" onclick="openLb(17)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/24.JPG" alt=""></div>
+      <div class="more-item" onclick="openLb(18)"><img src="https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/images/A2A1.jpg" alt=""></div>
+    </div>
+  </div>
+</section>
 
-<!-- ─── CONTACT ─── -->
+<!-- CONTACT -->
 <section id="contact">
-  <div class="contact-l sr">
-    <p class="eyebrow">Get in Touch</p>
-    <h2>Drop me<br>a message</h2>
-    <p>Want to license a shot, use an image for editorial, or just talk planes? My inbox is always open.</p>
-    <a class="btn" href="mailto:mgerlach0168@gmail.com">Email me →</a>
-  </div>
-  <div class="contact-r sr d2">
-    <div class="cf"><div class="cf-label">Email</div><div class="cf-val">mgerlach0168@gmail.com</div></div>
-    <div class="cf"><div class="cf-label">Home Airport</div><div class="cf-val">Breda International (EHSE)<br>North Brabant, Netherlands</div></div>
-    <div class="cf"><div class="cf-label">Speciality</div><div class="cf-val">Historic & warbird aircraft<br>Air-to-air photography</div></div>
-    <div class="cf"><div class="cf-label">Museum Role</div><div class="cf-val">Volunteer & Flight Coördinator<br>Vliegend Museum Seppe</div></div>
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-left reveal">
+        <div class="section-label">Get in touch</div>
+        <h2 class="section-title">Let's<br><em>Talk</em></h2>
+        <p class="contact-desc">Interested in licensing an image, commissioning a shoot, or just want to talk aviation? Drop me a message.</p>
+        <div class="contact-info">
+          <div class="contact-row">
+            <div class="contact-icon">✉</div>
+            <a href="mailto:mgerlach0168@gmail.com">mgerlach0168@gmail.com</a>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">✈</div>
+            Breda International Airport (EHSE)
+          </div>
+        </div>
+      </div>
+      <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" placeholder="Image licensing, print, shoot...">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell me more..."></textarea>
+        </div>
+        <button class="form-submit" type="submit">Send message</button>
+      </form>
+    </div>
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
+<!-- FOOTER -->
 <footer>
-  <span class="footer-name">Max Gerlach</span>
-  <span class="footer-copy">© 2026 — All shots mine · EHSE</span>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-copy">© 2026 Max Gerlach. All rights reserved.</span>
+      <a href="#hero" class="footer-logo">Max<span>.</span>Gerlach</a>
+    </div>
+  </div>
 </footer>
 
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <span class="lb-close" onclick="closeLb()">Close ✕</span>
+  <span class="lb-prev" onclick="lbNav(-1)">← Prev</span>
+  <img id="lb-img" src="" alt="">
+  <span class="lb-next" onclick="lbNav(1)">Next →</span>
+</div>
+
 <script>
-/* ── Lightbox ─────────────────────── */
-function openLb(src, label) {
-  document.getElementById('lb-img').src = src;
-  document.getElementById('lb-label').textContent = label;
-  document.getElementById('lb').classList.add('on');
-  document.body.style.overflow = 'hidden';
-}
-function closeLb() {
-  document.getElementById('lb').classList.remove('on');
-  document.body.style.overflow = '';
-}
-document.getElementById('lb').addEventListener('click', function(e) {
-  if (e.target === this) closeLb();
-});
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
-
-/* ── Drag-and-drop card image ──────── */
-const frame = document.getElementById('cardFrame');
-const cardImg = document.getElementById('cardImg');
-
-frame.addEventListener('dragover', e => { e.preventDefault(); frame.style.borderColor = 'var(--gold)'; });
-frame.addEventListener('dragleave', () => { frame.style.borderColor = ''; });
-frame.addEventListener('drop', e => {
-  e.preventDefault();
-  frame.style.borderColor = '';
-  const file = e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) {
-    const reader = new FileReader();
-    reader.onload = ev => {
-      cardImg.src = ev.target.result;
-      frame.classList.add('has-image');
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
-/* ── Scroll reveal ─────────────────── */
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(en => {
-    if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); }
+  /* NAV scroll effect */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
   });
-}, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
-document.querySelectorAll('.sr').forEach(el => obs.observe(el));
+
+  /* Scroll reveal */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  /* Lightbox */
+  const allImages = [
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/2.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/3.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/4.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/5.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/6.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/7.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/8.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/14.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/15.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/16.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/17.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/18.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/19.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/20.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/21.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/22.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/23.jpg',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/24.JPG',
+    'https://raw.githubusercontent.com/BubbelMaxYT/portfolioplanestuff/main/images/A2A1.jpg',
+  ];
+  let lbCurrent = 0;
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  function openLb(i) { lbCurrent = i; lbImg.src = allImages[i]; lb.classList.add('active'); document.body.style.overflow = 'hidden'; }
+  function closeLb() { lb.classList.remove('active'); document.body.style.overflow = ''; }
+  function lbNav(dir) { lbCurrent = (lbCurrent + dir + allImages.length) % allImages.length; lbImg.src = allImages[lbCurrent]; }
+  lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowLeft') lbNav(-1);
+    if (e.key === 'ArrowRight') lbNav(1);
+  });
+
+  /* Form */
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = 'Sent ✓';
+    btn.style.background = '#4a7fa5';
+    setTimeout(() => { btn.textContent = 'Send message'; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
 </script>
 </body>
 </html>
